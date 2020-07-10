@@ -1,0 +1,85 @@
+Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Example 1:
+
+Input: [2,2,1]
+Output: 1
+Example 2:
+
+Input: [4,1,2,1,2]
+Output: 4
+
+My Logic - 
+
+class Solution {
+    public int singleNumber(int[] nums) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i+1 < nums.length && nums[i] == nums[i+1]) {
+                continue;
+            }
+            count = 0;
+            for (int j = 0; j < nums.length; j++) {
+                if (nums[i] == nums[j]) {
+                    count++;
+                }
+            }
+            if (count != 2) {
+                return nums[i];
+            }
+        }
+        return 0;
+    }
+}
+
+Runtime: 460 ms, faster than 6.17% of Java online submissions for Single Number.
+Memory Usage: 43.8 MB, less than 8.90% of Java online submissions for Single Number.
+
+# Not very efficient but a rather simple approach
+# Let me try few more ways
+
+Approach-2
+
+class Solution {
+    public int singleNumber(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        
+        for (int num : nums) {
+            if (!list.contains(num)) {
+                list.add(num);
+            } else {
+                list.remove(new Integer(num));
+            }
+        }
+        
+        return list.get(0);
+    }
+}
+
+Runtime: 611 ms, faster than 5.02% of Java online submissions for Single Number.
+Memory Usage: 39.6 MB, less than 94.45% of Java online submissions for Single Number.
+
+# Memory usage is better now, but the runtime is still not good
+# We can use set but it will be somewhat same as list
+# Let me try one more way
+
+Approach-3
+
+class Solution {
+    public int singleNumber(int[] nums) {
+        int xor = 0;
+        for (int i = 0; i < nums.length; i++) {
+            xor ^= nums[i];
+        }
+        return xor;
+    }
+}
+
+Runtime: 0 ms, faster than 100% of Java online submissions for Single Number.
+Memory Usage: 40.6 MB, less than 37.70% of Java online submissions for Single Number.
+
+# Here, we got the best runtime complexity but memory usage is at loss which is okay
