@@ -1,0 +1,61 @@
+Given two strings s and t , write a function to determine if t is an anagram of s.
+
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+Output: true
+Example 2:
+
+Input: s = "rat", t = "car"
+Output: false
+Note:
+You may assume the string contains only lowercase alphabets.
+
+Follow up:
+What if the inputs contain unicode characters? How would you adapt your solution to such case?
+
+Logic-1
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if (t.length() > s.length())
+            return false;
+        
+        List<Character> list = new LinkedList<>();
+        
+        for (char c : s.toCharArray()) {
+            list.add(c);
+        }
+        
+        for (char c : t.toCharArray()) {
+            if (list.contains(c)) {
+                list.remove(new Character(c));
+            }
+        }
+        
+        return list.size()==0;
+    }
+}
+
+Runtime: 485 ms, faster than 5.12% of Java online submissions for Valid Anagram.
+Memory Usage: 45.2 MB, less than 5.04% of Java online submissions for Valid Anagram.
+
+Logic-2
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if (t.length() > s.length())
+            return false;
+        
+        char[] sArr = s.toCharArray();
+        Arrays.sort(sArr);
+        
+        char[] tArr = t.toCharArray();
+        Arrays.sort(tArr);
+        
+        return Arrays.equals(sArr, tArr);
+    }
+}
+
+Runtime: 3 ms, faster than 79.95% of Java online submissions for Valid Anagram.
+Memory Usage: 40 MB, less than 41.73% of Java online submissions for Valid Anagram.
