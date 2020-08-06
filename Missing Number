@@ -1,0 +1,68 @@
+Logic-1:
+
+class Solution {
+    public int missingNumber(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        
+        for (int n : nums) {
+            list.add(n);
+        }
+        
+        for (int i = 0; i < nums.length+1; i++) {
+            if (!list.contains(i)) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+}
+
+Runtime: 2314 ms, faster than 5.23% of Java online submissions for Missing Number.
+Memory Usage: 52.3 MB, less than 5.16% of Java online submissions for Missing Number.
+
+Logic-2:
+
+class Solution {
+    public int missingNumber(int[] nums) {
+        Set<Integer> list = new HashSet<>();
+        
+        for (int n : nums) {
+            list.add(n);
+        }
+        
+        for (int i = 0; i < nums.length+1; i++) {
+            if (!list.contains(i)) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+}
+
+Runtime: 5 ms, faster than 25.50% of Java online submissions for Missing Number.
+Memory Usage: 40.6 MB, less than 5.16% of Java online submissions for Missing Number.
+
+Logic-3:
+
+class Solution {
+    public int missingNumber(int[] nums) {
+        Arrays.sort(nums);
+        
+        for (int i = 0; i < nums.length+1; i++) {
+            try {
+                if (i != nums[i]) {
+                    return i;
+                }   
+            } catch (Exception e) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+}
+
+Runtime: 5 ms, faster than 25.50% of Java online submissions for Missing Number.
+Memory Usage: 40.4 MB, less than 8.72% of Java online submissions for Missing Number.
