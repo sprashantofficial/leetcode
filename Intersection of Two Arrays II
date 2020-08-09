@@ -1,0 +1,90 @@
+Given two arrays, write a function to compute their intersection.
+
+Example 1:
+
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
+Example 2:
+
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [4,9]
+Note:
+
+Each element in the result should appear as many times as it shows in both arrays.
+The result can be in any order.
+Follow up:
+
+What if the given array is already sorted? How would you optimize your algorithm?
+What if nums1's size is small compared to nums2's size? Which algorithm is better?
+What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+
+Logic-1:
+
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        List<Integer> list = new ArrayList<>();
+        
+        int minArr[] = nums2;
+        int maxArr[] = nums1;
+            
+        if (nums2.length > nums1.length) {
+            minArr = nums1;
+            maxArr = nums2;
+        }
+        
+        for (int i=0; i < minArr.length; i++) {
+            for (int j=0; j < maxArr.length; j++) {
+                if (minArr[i] == maxArr[j]) {
+                    list.add(minArr[i]);
+                    maxArr[j] = -1;
+                    break;
+                }
+            }
+        }
+        
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+
+Runtime: 10 ms, faster than 8.04% of Java online submissions for Intersection of Two Arrays II.
+Memory Usage: 39.8 MB, less than 58.41% of Java online submissions for Intersection of Two Arrays II.
+
+Logic-2:
+
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        HashMap<Integer, Integer> map1 = new HashMap<>();
+        for (int n : nums1) {
+            if (map1.containsKey(n)) {
+                map1.put(n, map1.get(n) + 1);
+            } else {
+                map1.put(n, 1);
+            }
+        }
+        
+        HashMap<Integer, Integer> map2 = new HashMap<>();
+        for (int n : nums2) {
+            if (map2.containsKey(n)) {
+                map2.put(n, map2.get(n) + 1);
+            } else {
+                map2.put(n, 1);
+            }
+        }
+        
+        List<Integer> list = new ArrayList<>();
+        for (int num : map1.keySet()) {
+            if (map2.containsKey(num)) {
+                int count = Math.min(map1.get(num), map2.get(num));
+                
+                while (count-- > 0) {
+                    list.add(num);
+                }
+            }
+        }
+        
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+
+Runtime: 5 ms, faster than 34.42% of Java online submissions for Intersection of Two Arrays II.
+Memory Usage: 39.6 MB, less than 74.26% of Java online submissions for Intersection of Two Arrays II.
