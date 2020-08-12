@@ -1,0 +1,63 @@
+Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+ 
+
+Example 1:
+
+Input: grid = [
+  ["1","1","1","1","0"],
+  ["1","1","0","1","0"],
+  ["1","1","0","0","0"],
+  ["0","0","0","0","0"]
+]
+Output: 1
+Example 2:
+
+Input: grid = [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+Output: 3
+
+Logic-1:
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        if (grid.length == 0) {
+            return 0;
+        }
+        
+        int result = 0;
+        int row = grid.length;
+        int col = grid[0].length;
+        
+        for (int i=0; i < row; i++) {
+            for (int j=0; j < col; j++) {
+                if (grid[i][j] == '1') {
+                    findAdjLand(grid, i, j, row, col);
+                    result++;
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    void findAdjLand(char[][] grid, int x, int y, int row, int col) {
+        if (x < 0 || x >= row || y < 0 || y >= col || grid[x][y] != '1') {
+            return;
+        }
+        
+        grid[x][y] = '2';
+        
+        findAdjLand(grid, x-1, y, row, col);//Up
+        findAdjLand(grid, x, y+1, row, col);//Right
+        findAdjLand(grid, x+1, y, row, col);//Down
+        findAdjLand(grid, x, y-1, row, col);//Left
+    }
+}
+
+Runtime: 1 ms, faster than 99.93% of Java online submissions for Number of Islands.
+Memory Usage: 41.7 MB, less than 91.41% of Java online submissions for Number of Islands.
