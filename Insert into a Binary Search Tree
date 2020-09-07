@@ -36,7 +36,7 @@ Each node will have a unique integer value from 0 to -10^8, inclusive.
 -10^8 <= val <= 10^8
 It's guaranteed that val does not exist in the original BST.
 
-Logic-
+Logic-1:
 
 /**
  * Definition for a binary tree node.
@@ -88,3 +88,45 @@ class Solution {
 
 Runtime: 0 ms, faster than 100.00% of Java online submissions for Insert into a Binary Search Tree.
 Memory Usage: 51.7 MB, less than 26.90% of Java online submissions for Insert into a Binary Search Tree.
+
+Logic-2:
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        return insert(root, val);
+    }
+    
+    public TreeNode insert(TreeNode root, int val) {
+        
+        if (root == null) {
+            root = new TreeNode(val);
+            return root;
+        }
+        
+        if (val > root.val) {
+            root.right = insert(root.right, val);
+        } else if (val < root.val) {
+            root.left = insert(root.left, val);
+        }
+        
+        return root;
+    }
+}
+
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Insert into a Binary Search Tree.
+Memory Usage: 40.4 MB, less than 39.44% of Java online submissions for Insert into a Binary Search Tree.
